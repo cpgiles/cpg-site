@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chris P. Giles — Entrepreneur. Strategist. Builder.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green: #15E573;
+  --green-dim: rgba(21,229,115,0.1);
+  --green-faint: rgba(21,229,115,0.05);
+  --green-glow: rgba(21,229,115,0.15);
+  --black: #060606;
+  --dark: #0D0D0D;
+  --card: #121212;
+  --card2: #181818;
+  --white: #F5F5F3;
+  --muted: #5A5A5A;
+  --border: rgba(255,255,255,0.07);
+  --border-g: rgba(21,229,115,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:30px;height:30px;border:1.5px solid rgba(21,229,115,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;}
+#cur-ring.big{width:50px;height:50px;border-color:var(--green);}
+@media(max-width:960px){#cur,#cur-ring{display:none;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:26px 60px;display:flex;align-items:center;justify-content:space-between;transition:padding .35s,background .35s;}
+nav.stuck{padding:14px 60px;background:rgba(6,6,6,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-name{font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;}
+.nav-name span{color:var(--green);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,245,243,0.45);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:var(--green);color:#000;padding:10px 22px;text-decoration:none;transition:background .2s,transform .15s;}
+.nav-cta:hover{background:#3EF08A;transform:translateY(-1px);}
+.mob-btn{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:none;padding:4px;}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(6,6,6,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+.mob-menu.open{display:flex;}
+.mob-menu a{font-size:34px;font-weight:700;color:var(--white);text-decoration:none;transition:color .2s;}
+.mob-menu a:hover{color:var(--green);}
+.mob-x{position:absolute;top:24px;right:32px;background:none;border:none;color:var(--white);font-size:26px;cursor:none;}
+
+/* ===== HERO — VIDEO/PHOTO BG ===== */
+#hero{min-height:100vh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 80px;overflow:hidden;}
+.hero-media{position:absolute;inset:0;overflow:hidden;background:#0a0a0a;}
+/* VIDEO OPTION: uncomment and add your mp4/YouTube embed below */
+/* .hero-video{width:100%;height:100%;object-fit:cover;filter:brightness(.3);} */
+.hero-photos{position:absolute;inset:0;}
+.hero-photos .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease;}
+.hero-photos .slide.active{opacity:1;}
+.hero-photos .slide img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.3);}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.97) 0%,rgba(6,6,6,.5) 50%,rgba(6,6,6,.1) 100%);}
+/* Ken Burns pan effect */
+.hero-photos .slide img{animation:ken 8s ease-in-out infinite alternate;}
+@keyframes ken{from{transform:scale(1)}to{transform:scale(1.06)}}
+
+.hero-body{position:relative;z-index:2;max-width:900px;}
+.h-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:28px;opacity:0;animation:up .7s .2s ease forwards;}
+.h-tag::before{content:'';width:28px;height:1px;background:var(--green);}
+.h-name{font-size:clamp(56px,9vw,118px);font-weight:700;line-height:.9;letter-spacing:-3px;margin-bottom:28px;opacity:0;animation:up .8s .4s ease forwards;}
+.h-name span{color:var(--green);}
+.h-sub{font-size:18px;font-weight:300;line-height:1.65;color:rgba(245,245,243,.6);max-width:520px;margin-bottom:36px;opacity:0;animation:up .8s .6s ease forwards;}
+.h-roles{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;opacity:0;animation:up .8s .75s ease forwards;}
+.rtag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(245,245,243,.12);padding:7px 16px;color:rgba(245,245,243,.4);transition:all .2s;}
+.rtag:hover{border-color:var(--green);color:var(--green);}
+
+/* DUAL CTA HERO — suggestion #6 */
+.h-dual-cta{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:up .8s .9s ease forwards;}
+.btn-g{background:var(--green);color:#000;font-family:'DM Sans',sans-serif;padding:14px 32px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:8px;}
+.btn-g:hover{background:#3EF08A;transform:translateY(-2px);}
+.btn-o{border:1px solid rgba(245,245,243,.18);color:var(--white);font-family:'DM Sans',sans-serif;padding:14px 32px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:border-color .2s,color .2s;}
+.btn-o:hover{border-color:var(--green);color:var(--green);}
+.h-scroll{position:absolute;bottom:36px;right:60px;z-index:2;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(245,245,243,.2);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:up .7s 1.3s ease forwards;}
+.h-scroll::after{content:'';width:1px;height:56px;background:linear-gradient(rgba(245,245,243,.15),transparent);}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* DUAL PATH — suggestion #6 */
+#dual-path{background:var(--dark);padding:0;border-top:1px solid var(--border);}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;margin:0 auto;}
+.dp-side{padding:64px 60px;border-right:1px solid var(--border);cursor:none;transition:background .3s;position:relative;overflow:hidden;}
+.dp-side:last-child{border-right:none;}
+.dp-side::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;}
+.dp-side.corp::before{background:linear-gradient(135deg,rgba(21,229,115,0.04),transparent);}
+.dp-side.cre::before{background:linear-gradient(135deg,rgba(21,229,115,0.07),transparent);}
+.dp-side:hover::before{opacity:1;}
+.dp-icon{font-size:32px;margin-bottom:16px;}
+.dp-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:block;}
+.dp-side h3{font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.3px;}
+.dp-side p{font-size:14px;color:rgba(245,245,243,.45);line-height:1.7;margin-bottom:24px;font-weight:300;}
+.dp-link{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:gap .2s;}
+.dp-link:hover{gap:14px;}
+
+/* ===== ABOUT ===== */
+#about{background:var(--black);padding:130px 60px;border-top:1px solid var(--border);}
+.about-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
+.about-l{position:sticky;top:110px;}
+.slabel{display:block;font-size:10px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--green);margin-bottom:16px;}
+.sh2{font-size:clamp(36px,4vw,54px);font-weight:700;line-height:1.05;letter-spacing:-.5px;}
+.sh2 span{color:var(--green);}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:44px;}
+.astat{background:var(--black);padding:26px 20px;border:1px solid transparent;transition:border-color .25s;}
+.astat:hover{border-color:var(--border-g);}
+.astat-n{font-size:42px;font-weight:700;color:var(--green);line-height:1;letter-spacing:-1px;}
+.astat-l{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.about-r{display:flex;flex-direction:column;gap:28px;}
+.about-img{width:100%;overflow:hidden;border:1px solid var(--border);}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.about-img:hover img{transform:scale(1.03);}
+.about-img.tall{aspect-ratio:4/5;}
+.about-img.wide{aspect-ratio:16/9;}
+.about-text{font-size:15px;line-height:1.85;color:rgba(245,245,243,.55);font-weight:300;}
+.about-text p+p{margin-top:18px;}
+.about-text strong{color:var(--white);font-weight:600;}
+
+/* ===== TIMELINE — suggestion #5 ===== */
+#timeline{background:var(--dark);padding:120px 60px;border-top:1px solid var(--border);}
+.timeline-wrap{max-width:1200px;margin:0 auto;}
+.tl-header{margin-bottom:80px;}
+.tl-track{position:relative;padding-left:32px;}
+.tl-track::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--green),rgba(21,229,115,0.1));}
+.tl-item{position:relative;margin-bottom:56px;padding-left:36px;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-dot{position:absolute;left:-40px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--black);border:2px solid var(--green);transition:background .3s;}
+.tl-item:hover .tl-dot{background:var(--green);}
+.tl-year{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.tl-item h3{font-size:18px;font-weight:600;margin-bottom:8px;letter-spacing:-.2px;}
+.tl-item p{font-size:14px;color:rgba(245,245,243,.45);line-height:1.7;font-weight:300;max-width:560px;}
+
+/* ===== MEDIA BRANDS — suggestion #2 ===== */
+#brands-eco{background:var(--black);padding:120px 60px;border-top:1px solid var(--border);}
+.brands-wrap{max-width:1200px;margin:0 auto;}
+.brands-intro{max-width:600px;margin-bottom:72px;}
+.brands-intro p{font-size:15px;color:rgba(245,245,243,.5);line-height:1.8;margin-top:16px;font-weight:300;}
+.brands-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+.brand-card{background:var(--black);padding:36px 32px;border:1px solid transparent;transition:background .3s,border-color .3s;cursor:none;position:relative;overflow:hidden;}
+.brand-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--green-faint),transparent);opacity:0;transition:opacity .4s;}
+.brand-card:hover{background:var(--card);border-color:var(--border-g);}
+.brand-card:hover::before{opacity:1;}
+.bc-tag{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:14px;display:block;}
+.bc-name{font-size:18px;font-weight:700;margin-bottom:8px;letter-spacing:-.2px;}
+.bc-desc{font-size:13px;color:rgba(245,245,243,.4);line-height:1.65;font-weight:300;}
+/* Authority badge on first card */
+.brand-card.authority{border-color:rgba(21,229,115,0.12);}
+.brand-card.authority .bc-tag{color:#fff;background:var(--green);display:inline-block;padding:2px 8px;font-size:9px;}
+
+/* ===== CREATOR / LIVESTREAM — suggestion #3 ===== */
+#creator{background:var(--dark);padding:120px 60px;border-top:1px solid var(--border);}
+.creator-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.creator-visual{position:relative;}
+.creator-screen{aspect-ratio:16/9;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;}
+.creator-screen img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.7);}
+.creator-live{position:absolute;top:16px;left:16px;background:#E53935;color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;display:flex;align-items:center;gap:6px;}
+.creator-live::before{content:'';width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.creator-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:3px;background:var(--border);}
+.cstat{background:var(--dark);padding:18px 16px;}
+.cstat-n{font-size:28px;font-weight:700;color:var(--green);letter-spacing:-1px;}
+.cstat-l{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.creator-text .slabel{margin-bottom:16px;}
+.creator-text h2{font-size:clamp(32px,3.5vw,48px);font-weight:700;line-height:1.05;letter-spacing:-.5px;margin-bottom:20px;}
+.creator-text h2 span{color:var(--green);}
+.creator-text p{font-size:15px;color:rgba(245,245,243,.5);line-height:1.8;font-weight:300;margin-bottom:28px;}
+.creator-platforms{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+.plat{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);padding:8px 16px;color:rgba(245,245,243,.4);transition:all .2s;}
+.plat:hover{border-color:var(--green);color:var(--green);}
+
+/* ===== PODCAST — suggestion #4 (Mastermind Thinks) ===== */
+#podcast{background:var(--black);padding:120px 60px;border-top:1px solid var(--border);}
+.podcast-wrap{max-width:1200px;margin:0 auto;}
+.podcast-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px;}
+.pod-player{background:var(--card);border:1px solid var(--border);padding:40px;margin-bottom:3px;}
+.pod-show{display:flex;align-items:center;gap:24px;margin-bottom:32px;}
+.pod-art{width:80px;height:80px;background:var(--black);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.pod-meta h3{font-size:20px;font-weight:700;letter-spacing:-.2px;margin-bottom:4px;}
+.pod-meta p{font-size:13px;color:rgba(245,245,243,.4);font-weight:300;}
+.pod-embed{background:var(--black);border:1px solid var(--border);padding:20px;font-size:13px;color:rgba(245,245,243,.4);text-align:center;line-height:1.7;}
+.pod-embed a{color:var(--green);text-decoration:none;}
+/* Spotify-style waveform placeholder */
+.pod-wave{display:flex;align-items:center;gap:2px;height:40px;justify-content:center;margin-bottom:8px;}
+.pod-wave span{width:3px;background:rgba(21,229,115,0.3);border-radius:2px;animation:wave 1s ease-in-out infinite alternate;}
+.pod-wave span:nth-child(odd){background:rgba(21,229,115,0.6);}
+.pod-wave span:nth-child(1){height:20px;animation-delay:0s;}
+.pod-wave span:nth-child(2){height:30px;animation-delay:.1s;}
+.pod-wave span:nth-child(3){height:15px;animation-delay:.2s;}
+.pod-wave span:nth-child(4){height:36px;animation-delay:.3s;}
+.pod-wave span:nth-child(5){height:22px;animation-delay:.4s;}
+.pod-wave span:nth-child(6){height:40px;animation-delay:.5s;}
+.pod-wave span:nth-child(7){height:18px;animation-delay:.6s;}
+.pod-wave span:nth-child(8){height:28px;animation-delay:.7s;}
+.pod-wave span:nth-child(9){height:12px;animation-delay:.8s;}
+.pod-wave span:nth-child(10){height:32px;animation-delay:.9s;}
+@keyframes wave{from{opacity:.4}to{opacity:1}}
+.pod-platforms{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.pp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);padding:8px 14px;color:rgba(245,245,243,.35);transition:all .2s;}
+.pp:hover{border-color:var(--green);color:var(--green);}
+
+/* ===== CLIENTS ===== */
+#clients{background:var(--dark);padding:100px 60px;border-top:1px solid var(--border);}
+.clients-wrap{max-width:1200px;margin:0 auto;}
+.section-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
+.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+.cl{background:var(--dark);padding:24px 22px;border:1px solid transparent;transition:background .25s,border-color .25s;}
+.cl:hover{background:var(--card2);border-color:var(--border-g);}
+.cl-name{font-size:13px;font-weight:600;margin-bottom:3px;}
+.cl-loc{font-size:11px;color:var(--muted);letter-spacing:.3px;}
+
+/* ===== WORK ===== */
+#work{background:var(--black);padding:100px 60px;border-top:1px solid var(--border);}
+.work-wrap{max-width:1200px;margin:0 auto;}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:56px;}
+.wcard{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--card);cursor:none;}
+.wcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease,filter .55s ease;filter:brightness(.85);}
+.wcard:hover img{transform:scale(1.06);filter:brightness(.55);}
+.wcard-over{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.7),transparent 50%);opacity:0;transition:opacity .4s;}
+.wcard:hover .wcard-over{opacity:1;}
+.wcard-lbl{position:absolute;bottom:18px;left:18px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green);opacity:0;transition:opacity .35s;}
+.wcard:hover .wcard-lbl{opacity:1;}
+
+/* ===== SERVICES ===== */
+#services{background:var(--dark);padding:100px 60px;border-top:1px solid var(--border);}
+.services-wrap{max-width:1200px;margin:0 auto;}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);margin-top:56px;}
+.svc{background:var(--dark);padding:52px 44px;position:relative;overflow:hidden;transition:background .3s;cursor:none;}
+.svc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--green-faint),transparent);opacity:0;transition:opacity .4s;}
+.svc:hover{background:var(--card);}
+.svc:hover::before{opacity:1;}
+.svc-n{font-size:60px;font-weight:700;color:rgba(21,229,115,.06);line-height:1;margin-bottom:24px;letter-spacing:-2px;transition:color .3s;}
+.svc:hover .svc-n{color:rgba(21,229,115,.13);}
+.svc-ico{font-size:26px;margin-bottom:14px;}
+.svc h3{font-size:18px;font-weight:600;margin-bottom:12px;line-height:1.2;transition:color .25s;letter-spacing:-.2px;}
+.svc:hover h3{color:var(--green);}
+.svc p{font-size:14px;line-height:1.7;color:rgba(245,245,243,.4);font-weight:300;}
+.svc-arr{position:absolute;bottom:32px;right:32px;width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);transform:rotate(-45deg);transition:all .25s;}
+.svc:hover .svc-arr{border-color:var(--green);color:var(--green);transform:rotate(0);}
+
+/* ===== SPEAKING ===== */
+#speaking{background:var(--black);padding:100px 60px;border-top:1px solid var(--border);}
+.speaking-wrap{max-width:1200px;margin:0 auto;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:56px;}
+.sp-img{aspect-ratio:4/3;overflow:hidden;border:1px solid var(--border);}
+.sp-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s;}
+.sp-img:hover img{transform:scale(1.04);}
+.sp-text h3{font-size:26px;font-weight:600;line-height:1.15;margin-bottom:18px;letter-spacing:-.3px;}
+.sp-text h3 span{color:var(--green);}
+.sp-text p{font-size:15px;line-height:1.8;color:rgba(245,245,243,.5);font-weight:300;margin-bottom:32px;}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.badge{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);padding:7px 14px;color:rgba(245,245,243,.35);transition:all .2s;}
+.badge:hover{border-color:var(--green);color:var(--green);}
+
+/* ===== BTM CROSSLINK — suggestion #7 ===== */
+#btm-link{background:var(--card);padding:80px 60px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.btm-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.btm-left .slabel{margin-bottom:12px;}
+.btm-left h2{font-size:clamp(28px,3vw,44px);font-weight:700;letter-spacing:-.5px;line-height:1.1;}
+.btm-left h2 span{color:var(--green);}
+.btm-left p{font-size:14px;color:rgba(245,245,243,.45);margin-top:12px;max-width:420px;line-height:1.7;font-weight:300;}
+.btm-right{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+.btm-cta{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--green);color:#000;padding:14px 32px;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;}
+.btm-cta:hover{background:#3EF08A;transform:translateY(-2px);}
+.btm-tag{font-size:11px;color:rgba(245,245,243,.25);letter-spacing:.5px;}
+
+/* ===== CTA ===== */
+#cta{background:var(--green);padding:110px 60px;position:relative;overflow:hidden;}
+#cta::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(0,0,0,.05);top:-160px;right:-80px;}
+.cta-wrap{max-width:800px;margin:0 auto;position:relative;z-index:1;}
+.cta-wrap .slabel{color:rgba(0,0,0,.4);}
+.cta-h{font-size:clamp(48px,7vw,88px);font-weight:700;line-height:.95;letter-spacing:-2px;color:#000;margin:18px 0 28px;}
+.cta-wrap p{font-size:17px;font-weight:300;color:rgba(0,0,0,.55);max-width:480px;line-height:1.7;margin-bottom:44px;}
+.btn-blk{background:#000;color:var(--green);font-family:'DM Sans',sans-serif;padding:15px 38px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:10px;}
+.btn-blk:hover{background:#111;transform:translateY(-2px);}
+
+/* ===== FOOTER ===== */
+footer{background:var(--dark);padding:72px 60px 44px;border-top:1px solid var(--border);}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px;}
+.fbrand .fn{font-size:22px;font-weight:700;letter-spacing:1.5px;color:var(--white);display:block;margin-bottom:14px;text-decoration:none;}
+.fbrand .fn span{color:var(--green);}
+.fbrand p{font-size:13px;color:var(--muted);line-height:1.75;max-width:220px;font-weight:300;}
+.fcol h5{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:18px;}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.fcol ul a{font-size:13px;font-weight:400;color:rgba(245,245,243,.35);text-decoration:none;transition:color .2s;}
+.fcol ul a:hover{color:var(--white);}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:28px;flex-wrap:wrap;gap:12px;}
+.foot-bot p{font-size:12px;color:rgba(245,245,243,.18);font-weight:300;}
+
+/* ===== REVEAL ===== */
+.r{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+.r.v{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}
+
+/* ===== PRODUCTIONS GRID ===== */
+.productions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);}
+.prod-card{background:var(--dark);padding:24px 22px;border:1px solid transparent;transition:background .25s,border-color .25s;}
+.prod-card:hover{background:var(--card2);border-color:var(--border-g);}
+.prod-type{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.prod-title{font-size:13px;font-weight:600;margin-bottom:6px;line-height:1.3;}
+.prod-detail{font-size:11px;color:var(--muted);line-height:1.5;font-weight:300;}
+
+/* ===== PRESS WALL ===== */
+.press-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px;}
+.press-card{background:var(--card);border:1px solid var(--border);overflow:hidden;aspect-ratio:1/1.1;position:relative;transition:border-color .3s,transform .3s;cursor:none;}
+.press-card:hover{border-color:var(--border-g);transform:translateY(-4px);}
+.press-card img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .5s;}
+.press-card:hover img{transform:scale(1.04);}
+.press-card-label{position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:linear-gradient(to top,rgba(6,6,6,.9),transparent);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);}
+
+/* ===== MODAL FORMS ===== */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(6,6,6,0.96);backdrop-filter:blur(12px);
+  overflow-y:auto;padding:40px 24px;
+}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal-box{
+  background:var(--dark);border:1px solid var(--border);
+  max-width:680px;width:100%;padding:56px 52px;
+  position:relative;margin:auto;
+}
+.modal-close{
+  position:absolute;top:20px;right:24px;
+  background:none;border:none;color:var(--muted);
+  font-size:22px;cursor:none;transition:color .2s;line-height:1;
+}
+.modal-close:hover{color:var(--white);}
+.modal-tag{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);display:block;margin-bottom:12px;}
+.modal-box h2{font-size:30px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px;line-height:1.1;}
+.modal-box .modal-sub{font-size:14px;color:rgba(245,245,243,.45);margin-bottom:40px;font-weight:300;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-row.one{grid-template-columns:1fr;margin-bottom:16px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.fg input,.fg select,.fg textarea{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:12px 16px;outline:none;transition:border-color .2s;width:100%;
+  -webkit-appearance:none;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);}
+.fg select option{background:var(--card);}
+.fg textarea{resize:vertical;min-height:100px;}
+.form-divider{height:1px;background:var(--border);margin:24px 0;}
+.form-section-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(245,245,243,.3);margin-bottom:16px;display:block;}
+.checkbox-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.cb-item{display:flex;align-items:center;gap:10px;cursor:none;}
+.cb-item input[type=checkbox]{
+  width:16px;height:16px;accent-color:var(--green);
+  cursor:none;flex-shrink:0;
+}
+.cb-item span{font-size:13px;color:rgba(245,245,243,.6);font-weight:400;}
+.form-submit-btn{
+  background:var(--green);color:#000;border:none;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:15px 40px;cursor:none;transition:background .2s,transform .15s;
+  margin-top:32px;display:inline-flex;align-items:center;gap:8px;
+}
+.form-submit-btn:hover{background:#3EF08A;transform:translateY(-2px);}
+.form-success{display:none;text-align:center;padding:40px 0;}
+.form-success .success-icon{font-size:48px;margin-bottom:16px;}
+.form-success h3{font-size:22px;font-weight:700;margin-bottom:10px;}
+.form-success p{font-size:14px;color:rgba(245,245,243,.5);line-height:1.7;margin-bottom:28px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px){
+  nav,nav.stuck{padding:16px 24px;}
+  .nav-links,.nav-cta{display:none;}
+  .mob-btn{display:block;}
+  #hero{padding:0 24px 60px;}
+  #about,#timeline,#brands-eco,#creator,#podcast,#clients,#work,#services,#speaking,#btm-link,#cta,footer{padding-left:24px;padding-right:24px;}
+  .about-wrap,.creator-wrap{grid-template-columns:1fr;gap:40px;}
+  .about-l{position:static;}
+  .clients-grid{grid-template-columns:repeat(2,1fr);}
+  .work-grid{grid-template-columns:repeat(2,1fr);}
+  .svc-grid{grid-template-columns:1fr;}
+  .speaking-grid,.dp-grid{grid-template-columns:1fr;}
+  .dp-side{border-right:none;border-bottom:1px solid var(--border);}
+  .brands-grid{grid-template-columns:repeat(2,1fr);}
+  .press-wall{grid-template-columns:repeat(2,1fr);}
+  .productions-grid{grid-template-columns:repeat(2,1fr);}
+  .foot-top{grid-template-columns:1fr 1fr;gap:36px;}
+  .btm-inner{flex-direction:column;align-items:flex-start;}
+  .modal-box{padding:36px 24px;}
+  .form-row{grid-template-columns:1fr;}
+  .checkbox-group{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .h-name{font-size:52px;letter-spacing:-1px;}
+  .work-grid,.brands-grid{grid-template-columns:1fr;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+  .foot-top{grid-template-columns:1fr;}
+  .clients-grid{grid-template-columns:1fr 1fr;}
+  .productions-grid{grid-template-columns:1fr;}
+  .press-wall{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-x" id="mobX">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#timeline" onclick="closeMob()">Story</a>
+  <a href="#brands-eco" onclick="closeMob()">Brands</a>
+  <a href="#creator" onclick="closeMob()">Creator</a>
+  <a href="#clients" onclick="closeMob()">Clients</a>
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#cta" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-name">Chris P.<span> Giles</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#timeline">Story</a></li>
+    <li><a href="#brands-eco">Brands</a></li>
+    <li><a href="#creator">Creator</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="nav-cta">Let's Talk →</a>
+  <button class="mob-btn" id="mobBtn">☰</button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-media">
+    <!-- SLIDESHOW of your photos — swap in video later: -->
+    <!-- <video class="hero-video" autoplay muted loop playsinline src="your-reel.mp4"></video> -->
+    <div class="hero-photos" id="heroSlides">
+      <div class="slide active"><img src="images/hero-bg.jpg" alt=""/></div>
+      <div class="slide"><img src="images/work-1.jpg" alt=""/></div>
+      <div class="slide"><img src="images/work-2.jpg" alt=""/></div>
+      <div class="slide"><img src="images/work-3.jpg" alt=""/></div>
+    </div>
+  </div>
+  <div class="hero-grad"></div>
+  <div class="hero-body">
+    <div class="h-tag">Charlotte, NC · DMV Roots · Nationally Deployed</div>
+    <h1 class="h-name">Chris P.<br><span>Giles.</span></h1>
+    <p class="h-sub">I help bold brands and creators get seen, heard, and remembered — through high-impact content, events, and strategy.</p>
+    <div class="h-roles">
+      <span class="rtag">Entrepreneur</span>
+      <span class="rtag">Strategist</span>
+      <span class="rtag">Builder</span>
+      <span class="rtag">Founder · Black Thai Media</span>
+    </div>
+    <!-- DUAL CTA — opens qualifying forms -->
+    <div class="h-dual-cta">
+      <a href="#" onclick="openModal('event');return false;" class="btn-g">Planning an Event? →</a>
+      <a href="#" onclick="openModal('brand');return false;" class="btn-o">Building Your Brand?</a>
+    </div>
+  </div>
+  <div class="h-scroll">Scroll</div>
+</section>
+
+<!-- ===== DUAL PATH — suggestion #6 ===== -->
+<div id="dual-path">
+  <div class="dp-grid">
+    <div class="dp-side corp r">
+      <div class="dp-icon">🎤</div>
+      <span class="dp-label">For Corporate &amp; Events</span>
+      <h3>You've got a show to run.</h3>
+      <p>Full-service technical production for conferences, concerts, faith events, and brand experiences. AV, staging, show calling, streaming — coast to coast.</p>
+      <a href="#" onclick="openModal('event');return false;" class="dp-link">Plan your event →</a>
+    </div>
+    <div class="dp-side cre r d1">
+      <div class="dp-icon">🎙️</div>
+      <span class="dp-label">For Creators &amp; Brands</span>
+      <h3>You've got a message to amplify.</h3>
+      <p>Podcast launches, content strategy, livestreaming, and brand building for entrepreneurs, thought leaders, and creators ready to go LOUD.</p>
+      <a href="#" onclick="openModal('brand');return false;" class="dp-link">Build your brand →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-l r">
+      <span class="slabel">About Chris</span>
+      <h2 class="sh2">20+ Years.<br><span>Zero Excuses.</span></h2>
+      <div class="about-stats">
+        <div class="astat"><div class="astat-n">20+</div><div class="astat-l">Years Experience</div></div>
+        <div class="astat"><div class="astat-n">1K+</div><div class="astat-l">Shows Executed</div></div>
+        <div class="astat"><div class="astat-n">7+</div><div class="astat-l">Media Brands</div></div>
+        <div class="astat"><div class="astat-n">100%</div><div class="astat-l">All the Way LOUD</div></div>
+      </div>
+    </div>
+    <div class="about-r">
+      <div class="about-img tall r d1"><img src="images/portrait.jpg" alt="Chris P. Giles"/></div>
+      <div class="about-text r d2">
+        <p>Chris P. Giles is a creative entrepreneur, live event specialist, and founder of <strong>Black Thai Media</strong> — a hybrid production agency built for bold brands, visionary creators, and unforgettable moments.</p>
+        <p>Born in the DMV and now based in Charlotte, Chris got his start over 20 years ago running sound in churches and DJing everything from weddings to warehouse parties. What began with speakers and sermons turned into a coast-to-coast career producing concerts, corporate events, fashion shows, and full-scale brand experiences.</p>
+        <p>When 2020 hit, Chris pivoted fast — bringing his production chops into the digital space. Today he's a livestreaming creator and content strategist on Amazon Live and YouTube, helping brands and businesses launch with less confusion and more confidence.</p>
+      </div>
+      <div class="about-img wide r d3"><img src="images/about-action.jpg" alt="Chris at the production desk"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TIMELINE — suggestion #5 ===== -->
+<section id="timeline">
+  <div class="timeline-wrap">
+    <div class="tl-header r">
+      <span class="slabel">The Journey</span>
+      <h2 class="sh2">20 Years.<br><span>One Direction.</span></h2>
+    </div>
+    <div class="tl-track">
+      <div class="tl-item r">
+        <div class="tl-dot"></div>
+        <div class="tl-year">Early 2000s</div>
+        <h3>Church Sound &amp; The DJ Days</h3>
+        <p>Started running sound in DMV-area churches while DJing everything from weddings to warehouse parties. Built an ear, built a reputation, and never looked back.</p>
+      </div>
+      <div class="tl-item r d1">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2005 – 2015</div>
+        <h3>Coast-to-Coast Production</h3>
+        <p>Grew from local gigs to full-scale national event production. Concerts, corporate experiences, fashion shows, and faith events with clients from DC to Las Vegas.</p>
+      </div>
+      <div class="tl-item r d2">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2016 – 2019</div>
+        <h3>Black Thai Media Founded</h3>
+        <p>Launched Black Thai Media to bring creative content, event execution, and strategy under one roof. Built a team and a reputation for delivering with clarity, culture, and volume.</p>
+      </div>
+      <div class="tl-item r d3">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2020</div>
+        <h3>The Pivot</h3>
+        <p>When live events stopped, Chris moved fast. Took 20 years of production expertise into the digital space — livestreaming, content strategy, and helping brands survive the shift.</p>
+      </div>
+      <div class="tl-item r d1">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021 – 2023</div>
+        <h3>Creator Economy &amp; Livestreaming</h3>
+        <p>Built a presence on Amazon Live and YouTube as a creator and consultant. Helped entrepreneurs, brands, and new streamers launch with less confusion and more confidence.</p>
+      </div>
+      <div class="tl-item r d2">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2024 – Now</div>
+        <h3>Black Thai X — The Ecosystem</h3>
+        <p>Expanded into a full holding company. Black Thai X now governs Media, Digital, Commerce, and Labs — an interconnected ecosystem built to help messages move from idea to execution to scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MEDIA BRANDS — suggestion #2 ===== -->
+<section id="brands-eco">
+  <div class="brands-wrap">
+    <div class="brands-intro r">
+      <span class="slabel">The Ecosystem</span>
+      <h2 class="sh2">Seven Brands.<br><span>One Vision.</span></h2>
+      <p>Every brand in the Black Thai ecosystem serves a specific audience with a specific message. Chris is the founder and strategic force behind all of them.</p>
+    </div>
+    <div class="brands-grid">
+      <div class="brand-card authority r">
+        <span class="bc-tag">Authority Layer</span>
+        <div class="bc-name">Mstrmnd Life</div>
+        <div class="bc-desc">The flagship personal brand — operator thinking, leadership, and perspective for entrepreneurs and creators.</div>
+      </div>
+      <div class="brand-card r d1">
+        <span class="bc-tag">Thought Leadership</span>
+        <div class="bc-name">Mastermind Thinks</div>
+        <div class="bc-desc">Long-form podcast exploring strategy, culture, and building brands that matter.</div>
+      </div>
+      <div class="brand-card r d2">
+        <span class="bc-tag">Short Form</span>
+        <div class="bc-name">Mastermind Minutes</div>
+        <div class="bc-desc">Short and long-form content delivering sharp, actionable insights in minutes.</div>
+      </div>
+      <div class="brand-card r">
+        <span class="bc-tag">Lifestyle</span>
+        <div class="bc-name">The Union Lab</div>
+        <div class="bc-desc">Real conversations about relationships, family, and the things that matter beyond business.</div>
+      </div>
+      <div class="brand-card r d1">
+        <span class="bc-tag">Business + Life</span>
+        <div class="bc-name">Off The Clock</div>
+        <div class="bc-desc">Operator perspectives on business, life balance, and building on your own terms.</div>
+      </div>
+      <div class="brand-card r d2">
+        <span class="bc-tag">Culture</span>
+        <div class="bc-name">Vice WKND</div>
+        <div class="bc-desc">Culture, lifestyle, and the moments that define who we are when the work stops.</div>
+      </div>
+      <div class="brand-card r" style="grid-column:span 1;">
+        <span class="bc-tag">Collectibles · Discovery</span>
+        <div class="bc-name">Mstrmnd Finds</div>
+        <div class="bc-desc">Media-first collectibles and culture discovery brand. Audience before monetization.</div>
+      </div>
+      <div class="brand-card r d1" style="grid-column:span 2;display:flex;align-items:center;gap:32px;background:var(--card);">
+        <div>
+          <span class="bc-tag">The Parent Company</span>
+          <div class="bc-name" style="font-size:22px;">Black Thai X</div>
+          <div class="bc-desc">The holding company governing vision, IP, and long-term strategy across all brands and divisions.</div>
+        </div>
+        <a href="https://www.blackthaimedia.com" target="_blank" class="btn-g" style="flex-shrink:0;white-space:nowrap;">Visit Black Thai Media →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CREATOR / LIVESTREAM — suggestion #3 ===== -->
+<section id="creator">
+  <div class="creator-wrap">
+    <div class="creator-visual r">
+      <div class="creator-screen">
+        <img src="images/headshot-2.jpg" alt="Chris P. Giles livestreaming"/>
+        <div class="creator-live">● Live</div>
+      </div>
+      <div class="creator-stats">
+        <div class="cstat"><div class="cstat-n">Amazon</div><div class="cstat-l">Live Creator</div></div>
+        <div class="cstat"><div class="cstat-n">YouTube</div><div class="cstat-l">Content Creator</div></div>
+        <div class="cstat"><div class="cstat-n">TikTok</div><div class="cstat-l">@mstrmndlife</div></div>
+        <div class="cstat"><div class="cstat-n">Instagram</div><div class="cstat-l">@mstrmndlife</div></div>
+      </div>
+    </div>
+    <div class="creator-text r d2">
+      <span class="slabel">Creator Economy</span>
+      <h2>Helping Creators <span>Go Live</span> with Confidence</h2>
+      <p>When 2020 shut down live events, Chris didn't wait — he went live. Now he helps entrepreneurs, brands, and new streamers launch their content presence without the confusion. Less setup stress. More momentum.</p>
+      <div class="creator-platforms">
+        <span class="plat">Amazon Live</span>
+        <span class="plat">YouTube</span>
+        <span class="plat">TikTok</span>
+        <span class="plat">Instagram</span>
+        <span class="plat">Podcasting</span>
+      </div>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Launch Your Creator Brand →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PODCAST — suggestion #4 ===== -->
+<section id="podcast">
+  <div class="podcast-wrap">
+    <div class="podcast-header r">
+      <div>
+        <span class="slabel">The Podcast</span>
+        <h2 class="sh2">Mastermind<br><span>Thinks</span></h2>
+      </div>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-o">Be a Guest →</a>
+    </div>
+    <div class="pod-player r d1">
+      <div class="pod-show">
+        <div class="pod-art">🎙</div>
+        <div class="pod-meta">
+          <h3>Mastermind Thinks</h3>
+          <p>Strategy. Culture. Building brands that matter. Hosted by Chris P. Giles.</p>
+        </div>
+      </div>
+      <!-- SWAP THIS: paste a Spotify, Apple, or Buzzsprout embed code here -->
+      <div class="pod-embed">
+        <div class="pod-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p>Listen on your favorite platform — or <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank">book a conversation with Chris directly</a>.</p>
+        <p style="margin-top:8px;font-size:11px;color:rgba(245,245,243,.2);">Paste your Spotify / Apple / Buzzsprout embed code here to activate the player</p>
+      </div>
+      <div class="pod-platforms">
+        <span class="pp">Spotify</span>
+        <span class="pp">Apple Podcasts</span>
+        <span class="pp">YouTube</span>
+        <span class="pp">Amazon Music</span>
+        <span class="pp">All Platforms</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLIENTS ===== -->
+<section id="clients">
+  <div class="clients-wrap">
+    <div class="section-hd r">
+      <div>
+        <span class="slabel">Who We've Run Shows For</span>
+        <h2 class="sh2">Companies &amp; Orgs<br><span>We've Worked With</span></h2>
+      </div>
+    </div>
+    <div class="clients-grid">
+      <div class="cl r"><div class="cl-name">J St Productions</div><div class="cl-loc">Lanham, MD</div></div>
+      <div class="cl r d1"><div class="cl-name">PRG</div><div class="cl-loc">Washington, DC</div></div>
+      <div class="cl r d2"><div class="cl-name">Lifepoint Church</div><div class="cl-loc">Fredericksburg, VA</div></div>
+      <div class="cl r d3"><div class="cl-name">Elevation Church</div><div class="cl-loc">Charlotte, NC</div></div>
+      <div class="cl r"><div class="cl-name">Mosaic Church</div><div class="cl-loc">Elkridge, MD</div></div>
+      <div class="cl r d1"><div class="cl-name">TSE Live</div><div class="cl-loc">Las Vegas, NV</div></div>
+      <div class="cl r d2"><div class="cl-name">LEMG</div><div class="cl-loc">Charlotte, NC</div></div>
+      <div class="cl r d3"><div class="cl-name">Union Church (i5Church)</div><div class="cl-loc">Glen Burnie, MD</div></div>
+      <div class="cl r"><div class="cl-name">AV Leads</div><div class="cl-loc">Washington, DC</div></div>
+      <div class="cl r d1"><div class="cl-name">SBMG</div><div class="cl-loc">Charlotte, NC</div></div>
+      <div class="cl r d2"><div class="cl-name">PEAK Grantmaking</div><div class="cl-loc">Washington, DC</div></div>
+      <div class="cl r d3"><div class="cl-name">Freeman</div><div class="cl-loc">Dallas, TX</div></div>
+      <div class="cl r"><div class="cl-name">FFGF</div><div class="cl-loc">Fredericksburg, VA</div></div>
+      <div class="cl r d1"><div class="cl-name">MLM Consulting</div><div class="cl-loc">Atlanta, GA</div></div>
+      <div class="cl r d2"><div class="cl-name">Markey's</div><div class="cl-loc">Indianapolis, IN</div></div>
+      <div class="cl r d3"><div class="cl-name">Springfield BC</div><div class="cl-loc">Atlanta, GA</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ===== -->
+<section id="work">
+  <div class="work-wrap">
+    <div class="section-hd r">
+      <div><span class="slabel">The Work</span><h2 class="sh2">Show<span> Reel</span></h2></div>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Work With Me →</a>
+    </div>
+    <div class="work-grid">
+      <div class="wcard r"><img src="images/work-1.jpg" alt="Live production — mixing board stage lights"/><div class="wcard-over"></div><div class="wcard-lbl">Live Production</div></div>
+      <div class="wcard r d1"><img src="images/work-2.jpg" alt="DiGiCo live show"/><div class="wcard-over"></div><div class="wcard-lbl">Live Production</div></div>
+      <div class="wcard r d2"><img src="images/work-3.jpg" alt="Stage show"/><div class="wcard-over"></div><div class="wcard-lbl">Events</div></div>
+      <div class="wcard r d3"><img src="images/work-4.jpg" alt="Purple venue event"/><div class="wcard-over"></div><div class="wcard-lbl">Events</div></div>
+      <div class="wcard r"><img src="images/work-5.jpg" alt="With Gary Vee at SXSW"/><div class="wcard-over"></div><div class="wcard-lbl">Connections</div></div>
+      <div class="wcard r d1"><img src="images/speaking-panel.jpg" alt="Amazon Influencer Day Panel"/><div class="wcard-over"></div><div class="wcard-lbl">Speaking · Panel</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="services-wrap">
+    <div class="section-hd r">
+      <div><span class="slabel">How I Help</span><h2 class="sh2">Four Ways to<br><span>Work Together</span></h2></div>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-o">Get a Quote →</a>
+    </div>
+    <div class="svc-grid">
+      <div class="svc r"><div class="svc-n">01</div><div class="svc-ico">🎯</div><h3>Fractional CMO &amp; Brand Strategy</h3><p>Marketing leadership and creative direction without the full-time cost. Build the systems, campaigns, and positioning to scale your brand and impact.</p><div class="svc-arr">→</div></div>
+      <div class="svc r d1"><div class="svc-n">02</div><div class="svc-ico">🎤</div><h3>Live Event &amp; Experience Production</h3><p>Full-service technical production for events that need to hit hard — AV, staging, show calling, streaming. Coast to coast.</p><div class="svc-arr">→</div></div>
+      <div class="svc r d2"><div class="svc-n">03</div><div class="svc-ico">🎙️</div><h3>Podcast &amp; Creator Launch Consulting</h3><p>Helping entrepreneurs, thought leaders, and creators get their voice out through high-quality, strategy-backed podcasting and video content.</p><div class="svc-arr">→</div></div>
+      <div class="svc r d3"><div class="svc-n">04</div><div class="svc-ico">⚡</div><h3>AI-Powered Marketing Systems</h3><p>Smart automation meets creative execution. From SEO bots to chat funnels and video automation — systems that run while you sleep.</p><div class="svc-arr">→</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPEAKING ===== -->
+<section id="speaking">
+  <div class="speaking-wrap">
+    <div class="section-hd r"><div><span class="slabel">Speaking</span><h2 class="sh2">On Stage &amp;<br><span>On Screen</span></h2></div></div>
+    <div class="speaking-grid">
+      <div class="sp-img r"><img src="images/speaking-panel.jpg" alt="Chris P. Giles on the VidFest Amazon Influencer Day panel"/></div>
+      <div class="sp-text r d2">
+        <h3>Real talk from <span>the trenches</span></h3>
+        <p>From Amazon Influencer Day at VidFest Expo to Podfest Master Class, Agency Summit masterclasses, and Grow with Google Digital Coaches — Chris brings real experience on content strategy, creator economy, event production, and building brands that last.</p>
+        <div class="badges">
+          <span class="badge">VidFest Expo 2022</span>
+          <span class="badge">Podfest Master Class 2021</span>
+          <span class="badge">Agency Summit · Agorapulse</span>
+          <span class="badge">Grow with Google</span>
+          <span class="badge">Amazon Influencer Day</span>
+          <span class="badge">Bootstrapping Your Way to Success</span>
+        </div>
+        <a href="#" onclick="openModal('speak');return false;" class="btn-g">Book Me to Speak →</a>
+      </div>
+    </div>
+    <!-- PRESS WALL -->
+    <div class="press-wall r" style="margin-top:56px;">
+      <div class="press-card">
+        <img src="images/flyer-vidfest.jpg" alt="VidFest Expo 2022 Speaker — Chris P. Giles"/>
+        <div class="press-card-label">VidFest Expo · 2022</div>
+      </div>
+      <div class="press-card">
+        <img src="images/flyer-podfest.png" alt="Podfest Master Class 2021 Speaker"/>
+        <div class="press-card-label">Podfest Master Class · 2021</div>
+      </div>
+      <div class="press-card">
+        <img src="images/flyer-agency.png" alt="Agency Summit — Turn 1 Video Into 50"/>
+        <div class="press-card-label">Agency Summit · Agorapulse</div>
+      </div>
+      <div class="press-card">
+        <img src="images/flyer-google.jpg" alt="Grow with Google Digital Coaches"/>
+        <div class="press-card-label">Grow with Google · 2021</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BTM CROSSLINK — suggestion #7 ===== -->
+<section id="btm-link">
+  <div class="btm-inner">
+    <div class="btm-left r">
+      <span class="slabel">The Agency</span>
+      <h2>Need a full team behind you?<br><span>That's Black Thai Media.</span></h2>
+      <p>Chris's personal work is one side of the coin. Black Thai Media is the full-service production agency — events, content, podcasts, and technical production for brands ready to go all the way LOUD.</p>
+    </div>
+    <div class="btm-right r d2">
+      <a href="https://www.blackthaimedia.com" target="_blank" class="btm-cta">Visit Black Thai Media →</a>
+      <span class="btm-tag">blackthaimedia.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta">
+  <div class="cta-wrap">
+    <span class="slabel">Let's Connect</span>
+    <h2 class="cta-h">Let's Work<br>Together.</h2>
+    <p>Whether you're building an event, launching a brand, or just need a strategist who's actually been in the room — let's talk.</p>
+    <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-blk">Book a Free 15-Min Call →</a>
+  </div>
+</section>
+
+<!-- FOOTER — updated social links @mstrmndlife -->
+<footer>
+  <div class="foot-top">
+    <div class="fbrand">
+      <a href="#" class="fn">Chris P.<span> Giles</span></a>
+      <p>Entrepreneur. Strategist. Builder.<br>Content. Events. Marketing.<br>All the way LOUD.</p>
+    </div>
+    <div class="fcol">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#timeline">Story</a></li>
+        <li><a href="#brands-eco">Brands</a></li>
+        <li><a href="#creator">Creator</a></li>
+        <li><a href="#clients">Clients</a></li>
+        <li><a href="#services">Services</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h5>Social — @mstrmndlife</h5>
+      <ul>
+        <li><a href="https://instagram.com/mstrmndlife" target="_blank">Instagram ↗</a></li>
+        <li><a href="https://facebook.com/mstrmndlife" target="_blank">Facebook ↗</a></li>
+        <li><a href="https://tiktok.com/@mstrmndlife" target="_blank">TikTok ↗</a></li>
+        <li><a href="https://youtube.com/@mstrmndlife" target="_blank">YouTube ↗</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:hello@blackthaimedia.com">hello@blackthaimedia.com</a></li>
+        <li><a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank">Book a Call ↗</a></li>
+        <li><a href="https://www.blackthaimedia.com" target="_blank">Black Thai Media ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <p>© 2025 Black Thai X LLC · All rights reserved.</p>
+    <p>Designed for impact.</p>
+  </div>
+</footer>
+
+<!-- ===== MODAL: PLAN YOUR EVENT ===== -->
+<div class="modal-overlay" id="modalEvent">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('event')">✕</button>
+    <div id="eventFormWrap">
+      <span class="modal-tag">For Corporate &amp; Event Clients</span>
+      <h2>Let's Plan Your Event</h2>
+      <p class="modal-sub">Tell us about your event and we'll reach out within 24 hours to discuss how we can make it happen.</p>
+      <form id="eventForm" onsubmit="submitForm(event,'event')">
+        <div class="form-row">
+          <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Pierre" required/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Email Address *</label><input type="email" name="email" placeholder="you@company.com" required/></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000"/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Organization / Company *</label><input type="text" name="org" placeholder="Company or Organization Name" required/></div>
+          <div class="fg"><label>Your Role / Title</label><input type="text" name="role" placeholder="Event Manager, Pastor, etc."/></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Event Details</span>
+        <div class="form-row">
+          <div class="fg">
+            <label>Event Type *</label>
+            <select name="eventType" required>
+              <option value="">Select event type</option>
+              <option>Corporate Conference / Summit</option>
+              <option>Concert / Live Entertainment</option>
+              <option>Faith / Worship Event</option>
+              <option>Awards / Gala</option>
+              <option>Brand Activation / Experience</option>
+              <option>Fundraiser / Non-Profit Event</option>
+              <option>Workshop / Seminar</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Expected Attendance</label>
+            <select name="attendance">
+              <option value="">Select range</option>
+              <option>Under 100</option>
+              <option>100 – 500</option>
+              <option>500 – 1,000</option>
+              <option>1,000 – 5,000</option>
+              <option>5,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Event Date / Timeframe</label><input type="text" name="eventDate" placeholder="Month/Year or 'ASAP'"/></div>
+          <div class="fg"><label>Event Location / City</label><input type="text" name="location" placeholder="Charlotte, NC or TBD"/></div>
+        </div>
+        <div class="form-row one">
+          <div class="fg">
+            <label>Venue Status</label>
+            <select name="venueStatus">
+              <option value="">Select one</option>
+              <option>Venue confirmed</option>
+              <option>Still searching for a venue</option>
+              <option>Virtual / Hybrid event</option>
+              <option>Need help finding a venue</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Services Needed (select all that apply)</span>
+        <div class="checkbox-group" style="margin-bottom:16px;">
+          <label class="cb-item"><input type="checkbox" name="services" value="Audio/Sound Engineering"/><span>Audio / Sound Engineering</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Video Production"/><span>Video Production &amp; Projection</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Lighting Design"/><span>Lighting Design</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Livestreaming"/><span>Livestreaming</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Stage / Set Design"/><span>Stage / Set Design</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Show Calling"/><span>Show Calling / Technical Direction</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Full Production Management"/><span>Full Production Management</span></label>
+          <label class="cb-item"><input type="checkbox" name="services" value="Content Capture"/><span>Onsite Content Capture</span></label>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Budget Range</label>
+            <select name="budget">
+              <option value="">Select range</option>
+              <option>Under $5,000</option>
+              <option>$5,000 – $15,000</option>
+              <option>$15,000 – $30,000</option>
+              <option>$30,000 – $75,000</option>
+              <option>$75,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>How Did You Find Us?</label>
+            <select name="source">
+              <option value="">Select one</option>
+              <option>Referral</option>
+              <option>Google Search</option>
+              <option>Social Media</option>
+              <option>Previous Client</option>
+              <option>Speaking Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Anything Else We Should Know?</label><textarea name="notes" placeholder="Tell us about your vision, any special requirements, or questions you have..."></textarea></div>
+        </div>
+        <button type="submit" class="form-submit-btn">Submit &amp; Get a Quote →</button>
+      </form>
+    </div>
+    <div class="form-success" id="eventSuccess">
+      <div class="success-icon">✅</div>
+      <h3>We got it — thank you!</h3>
+      <p>We'll review your event details and reach out within 24 hours. In the meantime, feel free to book a quick discovery call.</p>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Book a 15-Min Call →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: BUILD YOUR BRAND ===== -->
+<div class="modal-overlay" id="modalBrand">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('brand')">✕</button>
+    <div id="brandFormWrap">
+      <span class="modal-tag">For Creators &amp; Brand Builders</span>
+      <h2>Let's Build Your Brand</h2>
+      <p class="modal-sub">Tell us where you are and where you want to go — we'll map out the right strategy to get you there.</p>
+      <form id="brandForm" onsubmit="submitForm(event,'brand')">
+        <div class="form-row">
+          <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Your first name" required/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Your last name" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Email Address *</label><input type="email" name="email" placeholder="you@yourbrand.com" required/></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000"/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Brand / Business Name</label><input type="text" name="brandName" placeholder="Your brand, company, or personal brand"/></div>
+          <div class="fg"><label>Your Industry / Niche</label><input type="text" name="niche" placeholder="e.g. Health, Finance, Real Estate, Coaching"/></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Where You Are Now</span>
+        <div class="form-row">
+          <div class="fg">
+            <label>Current Stage *</label>
+            <select name="stage" required>
+              <option value="">Select your stage</option>
+              <option>Just getting started — no platform yet</option>
+              <option>Have an idea but haven't launched</option>
+              <option>Live but under 1,000 followers/subscribers</option>
+              <option>Growing — 1K to 10K audience</option>
+              <option>Established — 10K+ audience</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Current Monthly Revenue</label>
+            <select name="revenue">
+              <option value="">Select range</option>
+              <option>$0 — Pre-revenue</option>
+              <option>Under $1,000/mo</option>
+              <option>$1,000 – $5,000/mo</option>
+              <option>$5,000 – $15,000/mo</option>
+              <option>$15,000+/mo</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">What You're Looking to Build (select all that apply)</span>
+        <div class="checkbox-group" style="margin-bottom:16px;">
+          <label class="cb-item"><input type="checkbox" name="goals" value="Podcast Launch"/><span>Launch a Podcast</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="YouTube Channel"/><span>YouTube / Video Channel</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="Livestreaming"/><span>Livestreaming Presence</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="Personal Brand"/><span>Personal Brand Strategy</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="Content Strategy"/><span>Content Strategy &amp; Systems</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="Brand Identity"/><span>Brand Identity &amp; Positioning</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="Fractional CMO"/><span>Fractional CMO Services</span></label>
+          <label class="cb-item"><input type="checkbox" name="goals" value="AI Marketing Systems"/><span>AI Marketing Automation</span></label>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Timeline / Urgency</label>
+            <select name="timeline">
+              <option value="">Select timeline</option>
+              <option>ASAP — Ready to move now</option>
+              <option>Within 1 month</option>
+              <option>1 – 3 months</option>
+              <option>3 – 6 months</option>
+              <option>Just exploring for now</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Monthly Budget for Strategy/Services</label>
+            <select name="budget">
+              <option value="">Select range</option>
+              <option>Under $500/mo</option>
+              <option>$500 – $1,500/mo</option>
+              <option>$1,500 – $3,000/mo</option>
+              <option>$3,000 – $5,000/mo</option>
+              <option>$5,000+/mo</option>
+              <option>Project-based only</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Primary Platform You're Focused On</label>
+            <select name="platform">
+              <option value="">Select platform</option>
+              <option>Instagram</option>
+              <option>TikTok</option>
+              <option>YouTube</option>
+              <option>Amazon Live</option>
+              <option>LinkedIn</option>
+              <option>Podcast (audio)</option>
+              <option>Multiple platforms</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>How Did You Find Us?</label>
+            <select name="source">
+              <option value="">Select one</option>
+              <option>Referral</option>
+              <option>Google Search</option>
+              <option>Social Media</option>
+              <option>Podcast / YouTube</option>
+              <option>Speaking Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>What's Your Biggest Challenge Right Now?</label><textarea name="challenge" placeholder="Tell us what's holding you back or what you're trying to figure out. The more specific, the better."></textarea></div>
+        </div>
+        <button type="submit" class="form-submit-btn">Let's Get to Work →</button>
+      </form>
+    </div>
+    <div class="form-success" id="brandSuccess">
+      <div class="success-icon">🚀</div>
+      <h3>You're on our radar!</h3>
+      <p>We'll review your brand goals and reach out within 24 hours. Book a quick discovery call to get things moving faster.</p>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Book a 15-Min Call →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function tick(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick);})();
+document.querySelectorAll('a,button,.svc,.wcard,.cl,.astat,.brand-card,.dp-side,.tl-item,.press-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+});
+
+// Nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>80));
+
+// Mobile menu
+document.getElementById('mobBtn').onclick=()=>document.getElementById('mobMenu').classList.add('open');
+document.getElementById('mobX').onclick=closeMob;
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+
+// Hero slideshow
+const slides=document.querySelectorAll('.hero-photos .slide');
+let cur_slide=0;
+setInterval(()=>{
+  slides[cur_slide].classList.remove('active');
+  cur_slide=(cur_slide+1)%slides.length;
+  slides[cur_slide].classList.add('active');
+},5000);
+
+// MODAL
+function openModal(type){
+  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak'};
+  const el=document.getElementById(map[type]);
+  if(!el) return;
+  el.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(type){
+  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak'};
+  const el=document.getElementById(map[type]);
+  if(!el) return;
+  el.classList.remove('open');
+  document.body.style.overflow='';
+}
+// Close on overlay click — null-safe
+['modalEvent','modalBrand','modalSpeak'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('click',function(e){
+    if(e.target===this){
+      const type=id==='modalEvent'?'event':id==='modalBrand'?'brand':'speak';
+      closeModal(type);
+    }
+  });
+});
+// Close on ESC
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeModal('event');closeModal('brand');closeModal('speak');}
+});
+
+// FORM SUBMIT
+function submitForm(e, type){
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const payload={formType:type,submittedAt:new Date().toISOString()};
+  data.forEach((val,key)=>{
+    if(payload[key]){
+      payload[key]=Array.isArray(payload[key])?[...payload[key],val]:[payload[key],val];
+    } else {payload[key]=val;}
+  });
+  console.log('Form submission:', JSON.stringify(payload,null,2));
+  const wraps={event:['eventFormWrap','eventSuccess'],brand:['brandFormWrap','brandSuccess'],speak:['speakFormWrap','speakSuccess']};
+  document.getElementById(wraps[type][0]).style.display='none';
+  document.getElementById(wraps[type][1]).style.display='block';
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});},{threshold:.07});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+
+<!-- ===== MODAL: BOOK ME TO SPEAK ===== -->
+<div class="modal-overlay" id="modalSpeak">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('speak')">✕</button>
+    <div id="speakFormWrap">
+      <span class="modal-tag">Speaking Inquiry</span>
+      <h2>Book Chris to Speak</h2>
+      <p class="modal-sub">Tell us about your event and topic — we'll follow up within 48 hours to confirm availability and next steps.</p>
+      <form id="speakForm" onsubmit="submitForm(event,'speak')">
+        <div class="form-row">
+          <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Your first name" required/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Your last name" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Email Address *</label><input type="email" name="email" placeholder="you@company.com" required/></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000"/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Organization / Event Name *</label><input type="text" name="org" placeholder="Company, conference, or event name" required/></div>
+          <div class="fg"><label>Your Role / Title</label><input type="text" name="role" placeholder="Event Organizer, CEO, etc."/></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Event Details</span>
+        <div class="form-row">
+          <div class="fg">
+            <label>Event Type *</label>
+            <select name="eventType" required>
+              <option value="">Select event type</option>
+              <option>Conference / Summit</option>
+              <option>Corporate Training / Workshop</option>
+              <option>Podcast / Virtual Summit</option>
+              <option>Masterclass / Online Event</option>
+              <option>Panel Discussion</option>
+              <option>Faith Organization Event</option>
+              <option>Community / Non-Profit Event</option>
+              <option>University / School Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Event Format</label>
+            <select name="format">
+              <option value="">Select format</option>
+              <option>In-Person</option>
+              <option>Virtual / Online</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Event Date / Timeframe *</label><input type="text" name="eventDate" placeholder="e.g. October 2025 or specific date" required/></div>
+          <div class="fg"><label>Event Location</label><input type="text" name="location" placeholder="City, State or 'Virtual'"/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Expected Audience Size</label>
+            <select name="audience">
+              <option value="">Select range</option>
+              <option>Under 50</option>
+              <option>50 – 200</option>
+              <option>200 – 500</option>
+              <option>500 – 1,000</option>
+              <option>1,000+</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Audience Type / Industry</label>
+            <input type="text" name="audienceType" placeholder="e.g. Entrepreneurs, Creators, Corporate, Faith"/>
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Topic &amp; Focus (select all that apply)</span>
+        <div class="checkbox-group" style="margin-bottom:16px;">
+          <label class="cb-item"><input type="checkbox" name="topics" value="Content Strategy"/><span>Content Strategy</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Livestreaming"/><span>Livestreaming &amp; Video</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Podcasting"/><span>Podcasting</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Brand Building"/><span>Brand Building</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Creator Economy"/><span>Creator Economy</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Event Production"/><span>Event Production &amp; Tech</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Entrepreneurship"/><span>Entrepreneurship</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="AI Marketing"/><span>AI &amp; Marketing Systems</span></label>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Describe the Session or Talk You're Envisioning</label><textarea name="vision" placeholder="What do you want the audience to walk away knowing or feeling? Any specific theme, title idea, or outcome in mind?"></textarea></div>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Session Length</label>
+            <select name="sessionLength">
+              <option value="">Select length</option>
+              <option>15–20 minutes (Lightning Talk)</option>
+              <option>30 minutes</option>
+              <option>45–60 minutes (Keynote)</option>
+              <option>90+ minutes (Workshop)</option>
+              <option>Panel — varies</option>
+              <option>Flexible / TBD</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Speaking Budget / Honorarium</label>
+            <select name="budget">
+              <option value="">Select range</option>
+              <option>Exposure / No budget</option>
+              <option>Under $500</option>
+              <option>$500 – $2,500</option>
+              <option>$2,500 – $5,000</option>
+              <option>$5,000 – $10,000</option>
+              <option>$10,000+</option>
+              <option>Let's discuss</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Anything Else We Should Know?</label><textarea name="notes" placeholder="Previous speakers, special requirements, travel / accommodation needs, etc." style="min-height:80px;"></textarea></div>
+        </div>
+        <button type="submit" class="form-submit-btn">Submit Speaking Inquiry →</button>
+      </form>
+    </div>
+    <div class="form-success" id="speakSuccess">
+      <div class="success-icon">🎤</div>
+      <h3>Inquiry received!</h3>
+      <p>We'll review your event details and follow up within 48 hours. Want to move faster? Book a quick call below.</p>
+      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Book a 15-Min Call →</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
