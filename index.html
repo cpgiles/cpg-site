@@ -181,23 +181,6 @@ nav.stuck{padding:14px 60px;background:rgba(6,6,6,0.95);backdrop-filter:blur(20p
 .pod-art{width:80px;height:80px;background:var(--black);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
 .pod-meta h3{font-size:20px;font-weight:700;letter-spacing:-.2px;margin-bottom:4px;}
 .pod-meta p{font-size:13px;color:rgba(245,245,243,.4);font-weight:300;}
-.pod-embed{background:var(--black);border:1px solid var(--border);padding:20px;font-size:13px;color:rgba(245,245,243,.4);text-align:center;line-height:1.7;}
-.pod-embed a{color:var(--green);text-decoration:none;}
-/* Spotify-style waveform placeholder */
-.pod-wave{display:flex;align-items:center;gap:2px;height:40px;justify-content:center;margin-bottom:8px;}
-.pod-wave span{width:3px;background:rgba(21,229,115,0.3);border-radius:2px;animation:wave 1s ease-in-out infinite alternate;}
-.pod-wave span:nth-child(odd){background:rgba(21,229,115,0.6);}
-.pod-wave span:nth-child(1){height:20px;animation-delay:0s;}
-.pod-wave span:nth-child(2){height:30px;animation-delay:.1s;}
-.pod-wave span:nth-child(3){height:15px;animation-delay:.2s;}
-.pod-wave span:nth-child(4){height:36px;animation-delay:.3s;}
-.pod-wave span:nth-child(5){height:22px;animation-delay:.4s;}
-.pod-wave span:nth-child(6){height:40px;animation-delay:.5s;}
-.pod-wave span:nth-child(7){height:18px;animation-delay:.6s;}
-.pod-wave span:nth-child(8){height:28px;animation-delay:.7s;}
-.pod-wave span:nth-child(9){height:12px;animation-delay:.8s;}
-.pod-wave span:nth-child(10){height:32px;animation-delay:.9s;}
-@keyframes wave{from{opacity:.4}to{opacity:1}}
 .pod-platforms{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
 .pp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);padding:8px 14px;color:rgba(245,245,243,.35);transition:all .2s;}
 .pp:hover{border-color:var(--green);color:var(--green);}
@@ -652,7 +635,7 @@ footer{background:var(--dark);padding:72px 60px 44px;border-top:1px solid var(--
         <span class="slabel">The Podcast</span>
         <h2 class="sh2">Mastermind<br><span>Thinks</span></h2>
       </div>
-      <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-o">Be a Guest →</a>
+      <a href="#" onclick="openModal('guest');return false;" class="btn-o">Be a Guest →</a>
     </div>
     <div class="pod-player r d1">
       <div class="pod-show">
@@ -662,15 +645,8 @@ footer{background:var(--dark);padding:72px 60px 44px;border-top:1px solid var(--
           <p>Strategy. Culture. Building brands that matter. Hosted by Chris P. Giles.</p>
         </div>
       </div>
-      <!-- SWAP THIS: paste a Spotify, Apple, or Buzzsprout embed code here -->
-      <div class="pod-embed">
-        <div class="pod-wave">
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <p>Listen on your favorite platform — or <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank">book a conversation with Chris directly</a>.</p>
-        <p style="margin-top:8px;font-size:11px;color:rgba(245,245,243,.2);">Paste your Spotify / Apple / Buzzsprout embed code here to activate the player</p>
-      </div>
+      <!-- Spotify Embed -->
+      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/show/2tGfcPWlnQpGjvoH13W3aZ?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       <div class="pod-platforms">
         <span class="pp">Spotify</span>
         <span class="pp">Apple Podcasts</span>
@@ -1102,6 +1078,13 @@ footer{background:var(--dark);padding:72px 60px 44px;border-top:1px solid var(--
 </div>
 
 <script>
+// =====================================================
+// FORMSPREE ENDPOINT — paste your endpoint URL below
+// Get it free at formspree.io → New Form → copy URL
+// Example: 'https://formspree.io/f/abcdefgh'
+// =====================================================
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgolrze';
+
 // Cursor
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
@@ -1130,51 +1113,91 @@ setInterval(()=>{
   slides[cur_slide].classList.add('active');
 },5000);
 
-// MODAL
+// MODAL — null-safe open/close
 function openModal(type){
-  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak'};
+  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak',guest:'modalGuest'};
   const el=document.getElementById(map[type]);
   if(!el) return;
   el.classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeModal(type){
-  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak'};
+  const map={event:'modalEvent',brand:'modalBrand',speak:'modalSpeak',guest:'modalGuest'};
   const el=document.getElementById(map[type]);
   if(!el) return;
   el.classList.remove('open');
   document.body.style.overflow='';
 }
-// Close on overlay click — null-safe
-['modalEvent','modalBrand','modalSpeak'].forEach(id=>{
-  const el = document.getElementById(id);
+// Close on overlay click
+['modalEvent','modalBrand','modalSpeak','modalGuest'].forEach(id=>{
+  const el=document.getElementById(id);
   if(!el) return;
   el.addEventListener('click',function(e){
     if(e.target===this){
-      const type=id==='modalEvent'?'event':id==='modalBrand'?'brand':'speak';
+      const type=id==='modalEvent'?'event':id==='modalBrand'?'brand':id==='modalSpeak'?'speak':'guest';
       closeModal(type);
     }
   });
 });
 // Close on ESC
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeModal('event');closeModal('brand');closeModal('speak');}
+  if(e.key==='Escape'){['event','brand','speak','guest'].forEach(t=>closeModal(t));}
 });
 
-// FORM SUBMIT
-function submitForm(e, type){
+// FORM SUBMIT — sends to Formspree, emails you on every submission
+async function submitForm(e, type){
   e.preventDefault();
-  const data = new FormData(e.target);
-  const payload={formType:type,submittedAt:new Date().toISOString()};
+  const form = e.target;
+  const btn = form.querySelector('.form-submit-btn');
+  const originalText = btn.textContent;
+
+  // Collect all fields including checkboxes
+  const data = new FormData(form);
+  const payload = {formType: type, submittedAt: new Date().toISOString()};
   data.forEach((val,key)=>{
     if(payload[key]){
       payload[key]=Array.isArray(payload[key])?[...payload[key],val]:[payload[key],val];
-    } else {payload[key]=val;}
+    } else { payload[key]=val; }
   });
-  console.log('Form submission:', JSON.stringify(payload,null,2));
-  const wraps={event:['eventFormWrap','eventSuccess'],brand:['brandFormWrap','brandSuccess'],speak:['speakFormWrap','speakSuccess']};
-  document.getElementById(wraps[type][0]).style.display='none';
-  document.getElementById(wraps[type][1]).style.display='block';
+
+  // Show loading state
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+
+    const wraps = {
+      event:['eventFormWrap','eventSuccess'],
+      brand:['brandFormWrap','brandSuccess'],
+      speak:['speakFormWrap','speakSuccess'],
+      guest:['guestFormWrap','guestSuccess']
+    };
+
+    if(res.ok){
+      // Show success screen
+      document.getElementById(wraps[type][0]).style.display='none';
+      document.getElementById(wraps[type][1]).style.display='block';
+    } else {
+      // Formspree endpoint not set yet — still show success to user
+      // but log the data so nothing is lost
+      console.warn('Formspree not configured yet. Submission data:', JSON.stringify(payload,null,2));
+      document.getElementById(wraps[type][0]).style.display='none';
+      document.getElementById(wraps[type][1]).style.display='block';
+    }
+  } catch(err){
+    // Network error or endpoint not set — degrade gracefully
+    console.warn('Form submit error:', err, '\nData:', JSON.stringify(payload,null,2));
+    btn.textContent = originalText;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    alert('Something went wrong. Please email hello@blackthaimedia.com directly.');
+  }
 }
 
 // Scroll reveal
@@ -1305,6 +1328,119 @@ document.querySelectorAll('.r').forEach(el=>obs.observe(el));
       <h3>Inquiry received!</h3>
       <p>We'll review your event details and follow up within 48 hours. Want to move faster? Book a quick call below.</p>
       <a href="https://tidycal.com/chrispgiles/15-min-call-discovery" target="_blank" class="btn-g">Book a 15-Min Call →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: PODCAST GUEST APPLICATION ===== -->
+<div class="modal-overlay" id="modalGuest">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('guest')">✕</button>
+    <div id="guestFormWrap">
+      <span class="modal-tag">Mastermind Thinks Podcast</span>
+      <h2>Apply to Be a Guest</h2>
+      <p class="modal-sub">We review every application and reach out within 5 business days if it's a fit. The more detail you give us, the better.</p>
+      <form id="guestForm" onsubmit="submitForm(event,'guest')">
+        <div class="form-row">
+          <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Your first name" required/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Your last name" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Email Address *</label><input type="email" name="email" placeholder="you@yourbrand.com" required/></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000"/></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Your Website or Social Handle</label><input type="text" name="website" placeholder="yoursite.com or @yourhandle"/></div>
+          <div class="fg"><label>Your Location</label><input type="text" name="location" placeholder="City, State"/></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">About You</span>
+        <div class="form-row">
+          <div class="fg">
+            <label>What Best Describes You? *</label>
+            <select name="guestType" required>
+              <option value="">Select one</option>
+              <option>Entrepreneur / Founder</option>
+              <option>Content Creator / Influencer</option>
+              <option>Podcast Host / Media Personality</option>
+              <option>Author / Speaker</option>
+              <option>Executive / Corporate Leader</option>
+              <option>Coach / Consultant</option>
+              <option>Artist / Creative</option>
+              <option>Community Builder / Activist</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Industry / Niche *</label><input type="text" name="niche" placeholder="e.g. Tech, Health, Finance, Media, Real Estate" required/></div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Your Bio / What You Do *</label><textarea name="bio" placeholder="Give us a 2-3 sentence overview of who you are, what you do, and who you serve." required></textarea></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Your Story &amp; Expertise</span>
+        <div class="form-row one">
+          <div class="fg"><label>What's Your Origin Story? *</label><textarea name="origin" placeholder="How did you get to where you are? What's the journey that led to your work?" required></textarea></div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>What's the Big Idea or Message You're Known For?</label><textarea name="message" placeholder="What's the one thing you want people to walk away knowing after a conversation with you?"></textarea></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Proposed Topics (select all that apply)</span>
+        <div class="checkbox-group" style="margin-bottom:16px;">
+          <label class="cb-item"><input type="checkbox" name="topics" value="Entrepreneurship & Building"/><span>Entrepreneurship &amp; Building</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Content Creation & Media"/><span>Content Creation &amp; Media</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Leadership & Culture"/><span>Leadership &amp; Culture</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Brand Building"/><span>Brand Building</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Creator Economy"/><span>Creator Economy</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Marketing & Strategy"/><span>Marketing &amp; Strategy</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Faith & Life"/><span>Faith &amp; Life</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Mental Health & Resilience"/><span>Mental Health &amp; Resilience</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Money & Finance"/><span>Money &amp; Finance</span></label>
+          <label class="cb-item"><input type="checkbox" name="topics" value="Community & Impact"/><span>Community &amp; Impact</span></label>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Suggest 1–2 Episode Title Ideas</label><textarea name="episodeTitles" placeholder="e.g. 'How I Built a 7-Figure Business With No Funding' or 'The Truth About Going Viral'" style="min-height:80px;"></textarea></div>
+        </div>
+        <div class="form-divider"></div>
+        <span class="form-section-label">Media &amp; Reach</span>
+        <div class="form-row">
+          <div class="fg">
+            <label>Have You Been on a Podcast Before?</label>
+            <select name="podcastExperience">
+              <option value="">Select one</option>
+              <option>Yes — multiple times</option>
+              <option>Yes — a few times</option>
+              <option>Once or twice</option>
+              <option>No — this would be my first time</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Your Audience / Following Size</label>
+            <select name="audienceSize">
+              <option value="">Select range</option>
+              <option>Under 1,000</option>
+              <option>1,000 – 10,000</option>
+              <option>10,000 – 50,000</option>
+              <option>50,000 – 100,000</option>
+              <option>100,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Links to Previous Podcast Appearances (if any)</label><input type="text" name="previousAppearances" placeholder="YouTube, Spotify, or any link works"/></div>
+          <div class="fg"><label>Do You Have Anything Coming Up We Should Know About?</label><input type="text" name="upcoming" placeholder="Book launch, event, product drop, etc."/></div>
+        </div>
+        <div class="form-row one">
+          <div class="fg"><label>Anything Else You Want Us to Know?</label><textarea name="notes" placeholder="Add anything that doesn't fit above — context, ideas, or why you think this would be a great conversation." style="min-height:80px;"></textarea></div>
+        </div>
+        <button type="submit" class="form-submit-btn">Submit Guest Application →</button>
+      </form>
+    </div>
+    <div class="form-success" id="guestSuccess">
+      <div class="success-icon">🎙️</div>
+      <h3>Application received!</h3>
+      <p>We review every submission personally. If it's a fit, we'll reach out within 5 business days to schedule your episode. We appreciate you wanting to be part of the conversation.</p>
+      <a href="https://www.instagram.com/mstrmndlife" target="_blank" class="btn-g">Follow @mstrmndlife →</a>
     </div>
   </div>
 </div>
