@@ -1,0 +1,13 @@
+/* help block */
+.help-block{margin-top:40px}
+.help-block h3{font-size:18px;margin-bottom:16px}
+.help-block h3:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:10px;vertical-align:middle;box-shadow:0 0 10px var(--red)}
+.help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.help-item{background:var(--card);padding:22px 20px;border-top:2px solid transparent;transition:border-color .2s,background .2s}
+.help-item:hover{border-top-color:var(--red);background:var(--card2)}
+.help-item b{display:block;margin-bottom:6px;color:var(--white)}
+.help-item p{font-size:14px;color:var(--soft)}
+.help-close{margin-top:36px;font-size:clamp(20px,2.4vw,26px);font-weight:600;letter-spacing:-.01em;color:var(--white);max-width:760px}
+.help-close + .book-grid{margin-top:20px}
+@media (max-width:1020px){.help-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.help-grid{grid-template-columns:1fr}}
