@@ -1,5 +1,5 @@
 // ==== Formspree config: paste the two form IDs (the part after formspree.io/f/) ====
-const FORMSPREE = { quote: 'REPLACE_QUOTE_ID', speak: 'REPLACE_SPEAK_ID' };
+const FORMSPREE = { quote: 'xnpjzwad', speak: 'mjygolbr' };
 const SUBJECT = { quote: 'Quote request — chrispgiles.com', speak: 'Speaking request — chrispgiles.com' };
 // While an ID still starts with REPLACE_, submitting shows the error + mailto fallback (no fake success).
 (function(){var last;function open(id,btn){var m=document.getElementById(id);if(!m)return;last=btn;var f=m.querySelector('form');if(f){f.hidden=false;f.querySelector('[name=ts]').value=Date.now();}var t=m.querySelector('.cf-thanks');if(t)t.hidden=true;m.classList.add('open');document.body.classList.add('cf-lock');setTimeout(function(){var i=m.querySelector('input:not([type=hidden]):not([tabindex="-1"])');i&&i.focus();},30);}
