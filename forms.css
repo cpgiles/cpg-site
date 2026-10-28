@@ -12,3 +12,8 @@
 .cf-actions{display:flex;align-items:center;gap:14px;margin-top:20px;flex-wrap:wrap}.cf-actions .btn[disabled]{opacity:.6;cursor:wait}.cf-status{font-size:14px;color:#ff6b6b}
 .cf-thanks{text-align:center;padding:30px 6px}.cf-thanks .dot{width:56px;height:56px;border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;background:var(--red-dim);border:1px solid var(--red-border);color:var(--red);font-size:26px}.cf-thanks p{color:var(--soft);margin:8px auto 20px;max-width:420px}
 body.cf-lock{overflow:hidden}@media (max-width:600px){.cf-grid{grid-template-columns:1fr}.cf-box{padding:28px 20px;border-radius:18px}.cf-modal{padding:10px;align-items:flex-start}}
+html:not(.cf-js) .cf-modal:target{display:flex}
+.cf-x{display:flex;align-items:center;justify-content:center;text-decoration:none;line-height:1}
+.cf-req{font-size:13px;color:var(--muted);margin-top:12px}.cf-req i{color:var(--red);font-style:normal}
+.cf-status a{color:inherit;text-decoration:underline}
+.cf-f input[aria-invalid=true],.cf-f textarea[aria-invalid=true]{border-color:var(--red)}
